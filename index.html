@@ -10,9 +10,14 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+    <div>
+        <input type="range" id="yearinput" name="yearinput" min="2005" max="2025" value="2020" step="1" />
+        <label for="yearinput">Year</label>
+        <output id="yearoutput">2020</output>
+      </div>
     <div class="flex-container">
         <div id='map'></div>
-    </div>
+    </div> 
     <script src="constants.js"></script>
     <script src="map.js"></script>
 </body>

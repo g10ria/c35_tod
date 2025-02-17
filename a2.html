@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://vis-society.github.io/assignments/A2_report.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Vis &amp; Society Assignment 2</title>
+	<link rel="stylesheet" href="./a2_files/report.css">
+</head>
+
+<body>
+	<header>
+		<h1>
+			<small>Assignment 2</small>
+			Exploratory Data Analysis
+		</h1>
+
+		<p>
+			<strong>Gloria Zhu</strong> — <em>gloriazh@mit.edu</em>
+		</p>
+		<p style="white-space: pre-line;">
+			The two datasets I used are:
+			1. MassBuilds real estate developments in Somerville from 2005 to 2025
+			2. MBTA GTFS route geoJSON data
+		</p>
+		<p>
+			I decided to focus specifically on Somerville for this assignment, partly to limit the amount of data that I had to work with.
+			I also thought it could be interesting because Somerville is highly residential, containing many single family homes still.
+		</p>
+		<p>
+			The first dataset includes a crowdsourced list of development projects in Massachusetts from online website MassBuilds. Volunteers can add data points, 
+			including info such as the number of single family and multi family units, the developer's name, the height and area, etc.;
+			a full glossary of the data columns can be found at https://www.massbuilds.com/glossary. To ensure data simplicity and quality,
+			I only plotted developments that were labeled as completed, provided a year, and had their "stalled" flag set to false. Additionally,
+			for outliers (e.g. adding a very high volume of family units), I manually searched them up and matched them to 
+			publicly available developers' documents (e.g. the $465 Partners Healthcare Assembly Row development, which added 2000 parking spots).
+		</p>
+		<p>
+			The second dataset includes geoJSON data of MBTA bus routes, as of 2024.
+		</p>
+		<p>
+			Besides these two datasets, I also used a geoJSON polygon file provided by the city of Somerville 
+			delineating the city's boundaries, so that I could draw them on the map.
+		</p>
+	</header>
+	<main>
+		<section>
+			<h2>Subtheme: Transit-Oriented Developmenr</h2>
+
+			<h3>Overall Analysis Questions</h3>
+			<ol>
+				<li>In the past 20 years in Somerville, at what density have new housing developments been built, and where?</li>
+				<ul>
+					First, I wanted to visualize where developers have tended to build projects in the past 20 years (since 2005),
+					and how many family units were included in each developments. I wanted to see if there were specific areas that 
+					have seen high levels of development for some reason, if high-magnitude development is the norm or the outlier,
+					and if developments tend to cluster together, either near roads or in particular districts.
+				</ul>
+				<li>For those same developments, where are they located in relation to public transit arteries, and how has this changed over time?</li>
+				<ul>
+					Building on my visualization from the first question, I wanted to add a layer depicting the MBTA bus network.
+					I was curious to see how new developments were located relative to bus routes, and I also wanted to see how
+					this relationship differed throughout the years (e.g. for developments in 2010 vs. 2020), adding a time dimension.
+				</ul>
+				<li>Which developments added new parking spots as part of their project, and how many?</li>
+				<ul>
+					For this question, I was inspired by one of our readings from 11.001 (Sara Bronin, Key to the City): 
+					"...parking [zoning] requirements have created decentralized, privately funded infrastructure that facilitates 
+					driving." (ch. 6) I was interested in seeing which developments added new parking spots to their projects and 
+					where they tended to be located. I hypothesized that developments with very large numbers of units would have 
+					added many parking spots (possibly because they were required to by zoning restrictions), while smaller-scale 
+					developments wouldn't have added any (likely due to the ability of street parking to satisfy their needs).
+				</ul>
+			</ol>
+		</section>
+
+		<section>
+			<h2>Discoveries &amp; Insights</h2>
+
+			<figure>
+				<img src="./images/somerville_developments.png" alt="">
+				<figcaption>
+					Construction developments in Somerville completed within the past 20 years (between 2005 to 2025, inclusive).
+					The size of each circle is proportional to the amount of family units in the development; this quantity
+					ranges from 1 to 500 for this specific dataset. Note that the size of the circle does not refer to the physical 
+					area covered by the development; rather, it denotes the "impact" of the development in terms of how many people 
+					it is able to house. We glean some interesting insights from this map: first,
+					there is a concentration of high-volume development in the Northeast corner of Somerville, facing the Charles River.
+					Inspecting the data reveals that this is the Assembly Row area. It is somewhat closed off from the rest of the city,
+					with highway 93 on the left and railroad tracks on the right, but has its own T station, and is mixed use,
+					with many large retailers on-location. Besides Assembly Row, there are also two more notable high-density development
+					areas: one right next to Union Square (bottom middle) and a few right next to Magoun Square (in the middle, slightly up and to the left).
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="./images/2005_2015.png" alt="">
+				<figcaption>
+					Construction developments in Somerville completed between 2005 and 2015, inclusive. As previously,
+					the size of each circle is proportional to the amount of family units in the development. The yellow lines depict 
+					the MBTA bus and subway network in Somerville; deeper yellows indicate that multiple bus lines travel through that road. 
+					First, to extract some surface level observations, we see that transit routes tend to fan out radially from the Charles River 
+					side of Somerville, following existing large roads; in the middle of Somerville, there are no bus routes that cross the city
+					"perpendicularly". A note is that Somerville Rail Trail also runs directly down the long axis of Somerville; although it 
+					does not contain motorized transit like buses, it is potentially an important component of transit for bikers, scooter riders, etc.
+					(More analysis in the next image's caption, as these two come as a set)
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="./images/2016_2025.png" alt="">
+				<figcaption>
+					Construction developments in Somerville completed between 2016 and 2025, inclusive. From the last image to this one, we see 
+					some interesting developments. We saw the seeds of Assembly Row being planted in the previous map, with three mid-sized
+					developments; in this one, we see them sprout into much more high volume developments. However, the overall number of developments
+					has decreased drastically. It does seem that all of the later developments tended to be closer to the public transit networks
+					(within the highlighted yellow zones), whereas the earlier ones were scattered in many of the in-between areas. This could be due 
+					to the fact that newer transit lines weren't added until later--the MBTA data I'm depicting is from 2024 only, so I'm unable to 
+					visualize the whole time dimension properly. One more note is that we see the transit bus lines encircling Assembly Row; I would
+					argue that having easy access to public transit in that area is a big reason that developers are willing to bet on big projects there.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="./images/allyears_parkingonly.png" alt="">
+				<figcaption>
+					Construction developments in Somerville THAT ADDED PARKING, completed between 2005 and 2025, inclusive. The radius of each circle 
+					is proportional to the number of parking spots added by that development project, up to a max of 2000.
+					Following up from the last two questions, I wanted to explore the question of parking. We don't immediately think about parking when we 
+					think about housing, but it is oftentimes a quiet, insidious reason that developers don't favor 
+					high-density or transit-oriented development. When zoning requirements mandate a certain ratio of parking spots to units,
+					developers are more inclined to build low-density, expensive apartments, so they don't have to incur the costs of
+					building parking structures or giving up valuable surface area. This visualization confirms my hypothesis that the 
+					high-volume developments in Assembly Row would have added lots of parking. Inspecting the dataset also reveals that the 
+					development at Union Square added 300 units of parking (unspecified type). Next, adding the time dimension back in...
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="./images/early_parkingonly.png" alt="">
+				<figcaption>
+					Construction developments in Somerville THAT ADDED PARKING, completed between 2005 and 2025, inclusive. Analysis under next image.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="./images/later_parkingonly.png" alt="">
+				<figcaption>
+					Construction developments in Somerville THAT ADDED PARKING, completed between 2016 and 2025, inclusive. These two images reveal
+					that a much greater percentage of developments in 2016-2025 added parking as compared to 2005-2015. Although the difference 
+					doesn't look that large, we must remember that were about 3x as many developments completed between 2005-2015 in the first place. 
+					The most notable parking projects are again Assembly Row, but we see many smaller developments adding parking here and there, on the 
+					order of 50 or less parking spots. 
+				</figcaption>
+			</figure>
+		</section>
+
+		<section>
+			<h2>Summary</h2>
+
+			<p>
+				For this assignment, I was primarily interested in working with map data, because I wanted to extract spatial conclusions 
+				from my data. I struggled a lot with how to process the map data properly; originally, I was using
+				OpenStreetMaps, but I had a hard time changing the configuration opens when visualizing using Cartagen. It also took me 
+				a while to write a script to pick out Somerville-specific or Boston-specific data from the .osm file; the smallest map data 
+				file contained the entirety of the US Northeast. After that, I pivoted to using the MapLibre library instead, which has a much 
+				better documented API but less flexibility with importing custom data.
+				I feel like I could have explored some research questions further, but I didn't have time because it took me a while to wrangle the 
+				map data. However, I feel confident going into the next assignments (and the final project) that I can make more interactive 
+				and complex visualizations.
+			</p>
+			<p>
+				As for the actual research questions, I included most of my analyses in the captions, but I feel like overall, I was able to 
+				understand the MassBuilds dataset a lot better. Developments tend to be smaller-scale, with only a few projects building more than 200 housing 
+				units at a time. Assembly Row is very central in the development story of Somerville, especially in the past 10 years; the highest-volume 
+				buildings and the largest parking structure have been erected there. The number of distinct completed developments has decreased drastically between 
+				2016-2025 when compared to 2005-2015; I'm not exactly sure why. It could be that there are fewer available parcels for development, that COVID heavily 
+				slowed down the last five years of development, or some other reason entirely. More recent developments seem to be located closer to 
+				the MBTA bus network; yet at the same time, they're much more likely to add parking. (A quick Google search revealed that 
+				Somerville parking requirements were just removed by the City Council last December, so this might change going forward.)
+			</p>
+			<p>
+				One shortcoming is that I think should have plotted Cambridge development data as well, given how 
+				closely entwined it is with Somerville. For example, some of the data on the Southern border of Somerville is kind of deceptive, since 
+				it lies right next to Beacon Street; I'm sure that if Cambridge developments were plotted as well, there would be a lot more 
+				circles clumped up around there as it's a main artery street.
+			</p>
+		</section>
+	</main>
+
+
+</body></html>
